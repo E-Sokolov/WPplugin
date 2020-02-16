@@ -1,0 +1,6 @@
+/vendor
+/.idea
+/wordpress/wp-admin
+/wordpress/wp-includes
+/wordpress/wp-content/themes
+/wordpress/wp-content/index.php
