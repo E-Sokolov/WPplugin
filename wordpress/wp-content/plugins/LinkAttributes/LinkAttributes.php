@@ -10,10 +10,11 @@ add_filter('the_content','LinkEdit');
 
 function LinkEdit($content)
 {
-    $DOM = new DOMDocument('1.0','utf-8');
+    $DOM = new DOMDocument();
     $DOM->encoding = "UTF-8";
-    $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'utf-8');
     $DOM -> loadHTML($content);
+    //$content = mb_convert_encoding($content, 'HTML-ENTITIES', 'utf-8');
+    //$content = utf8_decode($content);
     $xpath = new DOMXPath($DOM);
     $a = $xpath -> query('//a');
     foreach ($a as $a)
@@ -32,7 +33,7 @@ function LinkEdit($content)
             }
         }
     }
-    $html = $DOM->saveHTML();
+    $html = utf8_decode($DOM->saveHTML($DOM -> documentElement));
     return $html;
 }
 ?>
