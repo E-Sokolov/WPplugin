@@ -6,17 +6,22 @@
  * Author: Yevheniy Sokolov
  * Author URI: https://vk.com/sokolov_e_i
  */
+include 'settings.php';
 add_filter('the_content','LinkEdit');
 
 function LinkEdit($content)
 {
+    $options = get_option('LinkAttrOptions');
+    if($options['enOption'] != '1') return $content;
+    $postType = get_post_type();
+    if($options['postType'.$postType] != '1') return $content;
+
     $DOM = new DOMDocument();
     $DOM->encoding = "UTF-8";
     $DOM -> loadHTML($content);
-    //$content = mb_convert_encoding($content, 'HTML-ENTITIES', 'utf-8');
-    //$content = utf8_decode($content);
     $xpath = new DOMXPath($DOM);
     $a = $xpath -> query('//a');
+
     foreach ($a as $a)
     {
         $href = substr($a -> getAttribute('href'),0,4);
